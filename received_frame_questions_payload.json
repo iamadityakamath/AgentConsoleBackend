@@ -1,0 +1,89 @@
+{
+  "received": true,
+  "payload": {
+    "member_id": "MBR-10002",
+    "selected_question_ids": [
+      "Q3",
+      "Q2",
+      "Q1",
+      "Q7",
+      "Q6",
+      "Q5",
+      "Q4"
+    ],
+    "selected_questions": [
+      {
+        "question_id": "Q1",
+        "source_position_id": "lab-section-1",
+        "source_type": "lab",
+        "source_label": "BNP Test Result",
+        "category": "lab_followup",
+        "priority": "critical",
+        "question_text": "James, your BNP level was critically high at 2331.1 pg/mL. Have you experienced any new symptoms since your last visit?",
+        "clinical_context": "This question is crucial to assess any worsening heart failure symptoms that may require immediate intervention."
+      },
+      {
+        "question_id": "Q2",
+        "source_position_id": "gap-section-1",
+        "source_type": "care_gap",
+        "source_label": "BMP Monitoring Gap",
+        "category": "lab_followup",
+        "priority": "high",
+        "question_text": "It's been 32 days since your last BMP lab was drawn. Can we arrange for you to get this test done soon to check your kidney function and potassium levels?",
+        "clinical_context": "Monitoring renal function and potassium is critical, especially given your heart failure and recent hospitalization."
+      },
+      {
+        "question_id": "Q3",
+        "source_position_id": "med-section-2",
+        "source_type": "medication",
+        "source_label": "Lisinopril",
+        "category": "medication_adherence",
+        "priority": "high",
+        "question_text": "I noticed you've been skipping doses of Lisinopril 3–4 times a week. What can we do to help you remember to take it regularly?",
+        "clinical_context": "Adherence to Lisinopril is vital for managing your hypertension and heart failure."
+      },
+      {
+        "question_id": "Q4",
+        "source_position_id": "med-section-4",
+        "source_type": "medication",
+        "source_label": "Furosemide",
+        "category": "medication_adherence",
+        "priority": "high",
+        "question_text": "You were advised to resume Furosemide after your hospitalization. Have you started taking it again as prescribed?",
+        "clinical_context": "Resuming Furosemide is essential for managing fluid retention and heart failure symptoms."
+      },
+      {
+        "question_id": "Q5",
+        "source_position_id": "general",
+        "source_type": "general",
+        "source_label": "General Well-being",
+        "category": "general",
+        "priority": "low",
+        "question_text": "How have you been feeling overall since we last spoke?",
+        "clinical_context": "Understanding James's overall well-being can help identify any additional concerns."
+      },
+      {
+        "question_id": "Q6",
+        "source_position_id": "general",
+        "source_type": "general",
+        "source_label": "Living Situation",
+        "category": "social_wellbeing",
+        "priority": "low",
+        "question_text": "Has anything changed at home — with your living situation or your ability to get to appointments?",
+        "clinical_context": "Changes at home may affect his ability to manage his health and attend appointments."
+      },
+      {
+        "question_id": "Q7",
+        "source_position_id": "general",
+        "source_type": "general",
+        "source_label": "Concerns",
+        "category": "general",
+        "priority": "low",
+        "question_text": "Is there anything you have been worried about that you would like to talk through today?",
+        "clinical_context": "Addressing James's concerns can help improve his engagement in his care plan."
+      }
+    ],
+    "generated_at": "2026-04-12T20:17:54.504Z",
+    "source": "overview-suggested-questions-selection"
+  }
+}

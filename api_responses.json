@@ -1,0 +1,275 @@
+{
+  "clinical_story": "James Thornton, a 74-year-old man with a history of Heart Failure, Hypertension, and COPD, has been experiencing significant health challenges. He was hospitalized on March 12, 2024 for acute decompensated heart failure, where his BNP level was critically high at 1,840 pg/mL, indicating worsening heart function. Following his discharge, he failed to refill his Furosemide prescription for over two weeks — the same medication gap that directly contributed to his admission. He currently has an overdue BMP critical for evaluating kidney function and electrolyte levels after his diuretic adjustment.",
+
+  "timeline_events": [
+    {
+      "date": "2024-03-11",
+      "event_type": "lab_draw",
+      "title": "Prior BMP Overdue",
+      "description": "A BMP was due before his discharge but was not completed. This gap in monitoring could impact his management of diuretics.",
+      "source_position_id": "gap-section-6",
+      "related_position_ids": [],
+      "clinical_significance": "high"
+    },
+    {
+      "date": "2024-03-12",
+      "event_type": "hospital_visit",
+      "title": "Hospital Admission — Acute Decompensated Heart Failure",
+      "description": "James was admitted via ED with worsening dyspnea, 8 lb weight gain over 5 days, and bilateral leg swelling. Directly precipitated by running out of Furosemide 2 weeks prior. Treated with IV Lasix with good response.",
+      "source_position_id": "note-section-1",
+      "related_position_ids": ["med-section-4", "lab-section-1", "gap-section-1"],
+      "clinical_significance": "critical"
+    },
+    {
+      "date": "2024-03-19",
+      "event_type": "specialist_visit",
+      "title": "Cardiology Follow-Up — Missed",
+      "description": "Cardiology follow-up was scheduled within 7 days of discharge per the discharge plan but was not kept. No subsequent note found near this date.",
+      "source_position_id": "note-section-1",
+      "related_position_ids": ["gap-section-1"],
+      "clinical_significance": "high"
+    },
+    {
+      "date": "2024-06-15",
+      "event_type": "prior_auth",
+      "title": "Pulmonary Rehab — Auth Approved",
+      "description": "Authorization for 12-week outpatient pulmonary rehabilitation was approved. However, the corresponding care gap shows enrollment still not initiated 102 days later.",
+      "source_position_id": "auth-section-2",
+      "related_position_ids": ["gap-section-4"],
+      "clinical_significance": "medium"
+    },
+    {
+      "date": "2024-06-28",
+      "event_type": "prior_auth",
+      "title": "Home Weight Scale — Auth Approved",
+      "description": "DME authorization for daily weight monitoring scale was approved for heart failure self-management. Authorization is currently active through 2025-06-28.",
+      "source_position_id": "auth-section-1",
+      "related_position_ids": ["note-section-1"],
+      "clinical_significance": "medium"
+    },
+    {
+      "date": "2024-01-31",
+      "event_type": "lab_draw",
+      "title": "Critical BNP — 2331 pg/mL",
+      "description": "BNP drawn at Northwestern Memorial was critically elevated at 2331 pg/mL, well above the 100 pg/mL threshold. SpO2 resting at 91% also flagged Low on the same draw. Multiple lipid values abnormal.",
+      "source_position_id": "lab-section-1",
+      "related_position_ids": ["lab-section-9", "lab-section-5", "note-section-1"],
+      "clinical_significance": "critical"
+    }
+  ],
+
+  "coordinator_questions": [
+    {
+      "question_id": "Q1",
+      "source_position_id": "lab-section-1",
+      "source_type": "lab",
+      "source_label": "BNP Critical High — 2331 pg/mL",
+      "category": "lab_followup",
+      "priority": "critical",
+      "question_text": "James, since your hospital stay in March, how has your breathing been? Your BNP level was very high at 2331 — that's a marker we use to track how hard your heart is working. Have you noticed any swelling in your legs or trouble sleeping flat?",
+      "clinical_context": "BNP at 2331 pg/mL is over 23x the normal threshold, indicating significant cardiac stress. Coordinator needs to assess whether symptoms have improved or worsened since the March admission."
+    },
+    {
+      "question_id": "Q2",
+      "source_position_id": "gap-section-1",
+      "source_type": "care_gap",
+      "source_label": "BMP Overdue — 32 days since diuretic adjustment",
+      "category": "care_gap",
+      "priority": "critical",
+      "question_text": "We need to get some blood work done for you fairly soon — it's been about a month since your last kidney and electrolyte check, and that's important to do after any changes to your water pill. Is there anything making it hard to get to a lab right now?",
+      "clinical_context": "ACC/AHA guidelines require BMP within 1–2 weeks of diuretic dose change. Now 32 days overdue. Potassium and creatinine must be checked — Furosemide non-adherence increases risk of electrolyte imbalance."
+    },
+    {
+      "question_id": "Q3",
+      "source_position_id": "med-section-4",
+      "source_type": "medication",
+      "source_label": "Furosemide — Non-Adherent · 85 days since last fill",
+      "category": "medication_adherence",
+      "priority": "critical",
+      "question_text": "James, I want to check in about your water pill — Furosemide. It looks like it's been about 85 days since your last refill. That was actually the same medication you ran out of before your hospital stay in March. What's been making it hard to keep up with that one?",
+      "clinical_context": "Furosemide non-adherence directly caused the March 2024 hospitalization per the discharge summary. An 85-day gap means the patient is likely retaining fluid again, which may explain the elevated BNP."
+    },
+    {
+      "question_id": "Q4",
+      "source_position_id": "med-section-2",
+      "source_type": "medication",
+      "source_label": "Lisinopril — Non-Adherent · 94 days since last fill",
+      "category": "medication_adherence",
+      "priority": "high",
+      "question_text": "How about your Lisinopril — the blood pressure pill? I can see you've been skipping doses a few times a week. Is it easy to forget, or is something else getting in the way?",
+      "clinical_context": "Lisinopril non-adherence with 94-day fill gap increases risk of uncontrolled hypertension, which compounds cardiac stress in a patient with HFrEF. Forgetfulness is documented in rx_notes."
+    },
+    {
+      "question_id": "Q5",
+      "source_position_id": "med-section-3",
+      "source_type": "medication",
+      "source_label": "Spironolactone — Non-Adherent · 60 days since last fill",
+      "category": "medication_adherence",
+      "priority": "high",
+      "question_text": "You're also on Spironolactone for your heart — are you managing to take that one regularly? I know keeping track of multiple pills can be a lot.",
+      "clinical_context": "Spironolactone non-adherence in HFrEF patients reduces survival benefit. Combined with Furosemide and Lisinopril non-adherence, patient is missing three of six heart/BP medications."
+    },
+    {
+      "question_id": "Q6",
+      "source_position_id": "note-section-1",
+      "source_type": "ehr_note",
+      "source_label": "Cardiology Follow-Up Overdue — scheduled 2024-03-19",
+      "category": "care_gap",
+      "priority": "high",
+      "question_text": "After you left the hospital in March, there was a cardiology follow-up scheduled for March 19th. Were you able to make it to that appointment? If not, do you remember what got in the way?",
+      "clinical_context": "Post-discharge cardiology follow-up within 7 days is a core ACC/AHA heart failure standard. Missing it increases 30-day readmission risk significantly. No subsequent note found confirming the visit occurred."
+    },
+    {
+      "question_id": "Q7",
+      "source_position_id": "med-section-6",
+      "source_type": "medication",
+      "source_label": "Albuterol — On Hold · Patient Hospitalized",
+      "category": "medication_adherence",
+      "priority": "high",
+      "question_text": "Your rescue inhaler — the Albuterol — was put on hold while you were in hospital. Have you been able to get that restarted? Are you having any trouble breathing or wheezing that it's been helping with?",
+      "clinical_context": "Albuterol on hold status may not have been updated post-discharge. With SpO2 at 91% and COPD diagnosis, having rescue inhaler access is critical for acute symptom management."
+    },
+    {
+      "question_id": "Q8",
+      "source_position_id": "lab-section-9",
+      "source_type": "lab",
+      "source_label": "SpO2 Low — 91%",
+      "category": "lab_followup",
+      "priority": "high",
+      "question_text": "When you were last checked, your oxygen level was at 91% while sitting still — which is a little lower than we'd like. Are you feeling short of breath during everyday activities, like walking around the house or climbing stairs?",
+      "clinical_context": "Resting SpO2 of 91% is below the 95% threshold and warrants monitoring. Combined with COPD and missed pulmonary rehab enrollment, respiratory status may be deteriorating."
+    },
+    {
+      "question_id": "Q9",
+      "source_position_id": "gap-section-4",
+      "source_type": "care_gap",
+      "source_label": "Pulmonary Rehab — Not Enrolled · 102 days overdue",
+      "category": "care_gap",
+      "priority": "medium",
+      "question_text": "A few months ago we got approval for you to join a pulmonary rehab program — it's a 12-week program to help with your breathing and build up your stamina. We haven't heard back that you've enrolled yet. Is that something that's still on your radar, or has something been getting in the way?",
+      "clinical_context": "Pulmonary rehab authorization was approved June 17, 2024 but enrollment gap is now 102 days. GOLD guidelines recommend rehab for GOLD Stage 2+ COPD. Non-enrollment may be due to transportation barriers per gap notes."
+    },
+    {
+      "question_id": "Q10",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "General Wellbeing",
+      "category": "social_wellbeing",
+      "priority": "low",
+      "question_text": "How have you been feeling overall since we last spoke?",
+      "clinical_context": "Open-ended wellbeing check to establish rapport and surface any unreported changes in condition or circumstances."
+    },
+    {
+      "question_id": "Q11",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "Home Situation",
+      "category": "social_wellbeing",
+      "priority": "low",
+      "question_text": "Has anything changed at home — with your living situation or your ability to get to appointments?",
+      "clinical_context": "Patient is divorced, retired, with home health aide 3x/week. Changes in support structure could explain medication non-adherence or missed appointments."
+    },
+    {
+      "question_id": "Q12",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "Patient Concerns",
+      "category": "social_wellbeing",
+      "priority": "low",
+      "question_text": "Is there anything you've been worried about that you'd like to talk through today?",
+      "clinical_context": "Invites patient to surface concerns not captured in structured data — particularly important for a patient with three non-adherent medications and a missed follow-up."
+    }
+  ],
+
+  "missed_follow_ups": [
+    {
+      "source_position_id": "note-section-1",
+      "note_date": "2024-03-12",
+      "follow_up_date_recommended": "2024-03-19",
+      "follow_up_found": false,
+      "days_overdue": 241,
+      "clinical_risk": "Missing the post-discharge cardiology follow-up within 7 days significantly increases 30-day heart failure readmission risk and leaves medication titration (Carvedilol) unmonitored."
+    }
+  ],
+
+  "medication_risk_connections": [
+    {
+      "source_position_id": "med-section-4",
+      "drug_name": "Furosemide",
+      "adherence_status": "Non-Adherent",
+      "days_since_last_fill": 85,
+      "connected_lab_position_ids": ["lab-section-1"],
+      "connected_gap_position_ids": ["gap-section-1"],
+      "connected_note_position_ids": ["note-section-1"],
+      "risk_summary": "Furosemide non-adherence directly triggered the March 2024 hospitalization per the discharge summary. The current 85-day fill gap mirrors the same pattern, and the elevated BNP of 2331 pg/mL may reflect fluid re-accumulation from ongoing non-adherence."
+    },
+    {
+      "source_position_id": "med-section-2",
+      "drug_name": "Lisinopril",
+      "adherence_status": "Non-Adherent",
+      "days_since_last_fill": 94,
+      "connected_lab_position_ids": ["lab-section-2"],
+      "connected_gap_position_ids": ["gap-section-6"],
+      "connected_note_position_ids": ["note-section-1"],
+      "risk_summary": "Lisinopril non-adherence with a 94-day fill gap leaves hypertension uncontrolled, compounding cardiac afterload in a patient with HFrEF EF 35%. The BMP overdue gap (gap-section-6) is directly tied to monitoring ACE inhibitor safety."
+    },
+    {
+      "source_position_id": "med-section-3",
+      "drug_name": "Spironolactone",
+      "adherence_status": "Non-Adherent",
+      "days_since_last_fill": 60,
+      "connected_lab_position_ids": ["lab-section-3"],
+      "connected_gap_position_ids": ["gap-section-1"],
+      "connected_note_position_ids": ["note-section-1"],
+      "risk_summary": "Spironolactone non-adherence in HFrEF removes a proven mortality-reducing agent. Combined with Furosemide and Lisinopril non-adherence, three of six cardiac/BP medications are not being taken as prescribed."
+    },
+    {
+      "source_position_id": "med-section-6",
+      "drug_name": "Albuterol",
+      "adherence_status": "On Hold",
+      "days_since_last_fill": 94,
+      "connected_lab_position_ids": ["lab-section-9"],
+      "connected_gap_position_ids": ["gap-section-5"],
+      "connected_note_position_ids": ["note-section-1"],
+      "risk_summary": "Albuterol placed on hold during hospitalization may not have been reactivated post-discharge. With resting SpO2 at 91% and overdue spirometry (568 days), lack of rescue inhaler access in a COPD patient is a significant respiratory safety risk."
+    }
+  ],
+
+  "coordinator_alerts": [
+    {
+      "rank": 1,
+      "alert_title": "Furosemide Gap — Same Pattern That Caused March Hospitalization",
+      "connected_position_ids": ["med-section-4", "note-section-1", "lab-section-1", "gap-section-1"],
+      "reason": "James was hospitalized in March 2024 specifically because he ran out of Furosemide for 2 weeks. He now has an 85-day fill gap for the same medication, and his BNP was 2331 pg/mL on his last draw — more than 23x the normal limit. This is an imminent readmission risk.",
+      "suggested_opening": "James, I want to start with your water pill — Furosemide. We know that running out of it last time led to your hospital stay in March. It looks like it's been about 85 days since your last refill. Can we talk about what's been going on with that?"
+    },
+    {
+      "rank": 2,
+      "alert_title": "BMP Overdue — Potassium and Kidney Function Unmonitored",
+      "connected_position_ids": ["gap-section-1", "gap-section-6", "med-section-4", "med-section-2"],
+      "reason": "BMP is 32 days overdue since the last diuretic adjustment, violating ACC/AHA guidelines requiring a recheck within 1–2 weeks. With both Furosemide and Lisinopril non-adherent, potassium and creatinine levels are unknown and could be dangerously abnormal.",
+      "suggested_opening": "We really need to get some blood work done for you this week — your kidney numbers and potassium haven't been checked in over a month since your water pill dose changed. Is there a lab near you that would be easy to get to?"
+    },
+    {
+      "rank": 3,
+      "alert_title": "Three Cardiac Medications Non-Adherent Simultaneously",
+      "connected_position_ids": ["med-section-2", "med-section-3", "med-section-4"],
+      "reason": "Furosemide (85 days), Lisinopril (94 days), and Spironolactone (60 days) are all non-adherent at the same time. Together these three medications manage fluid retention, blood pressure, and cardiac remodeling in HFrEF. Missing all three significantly elevates readmission risk.",
+      "suggested_opening": "I want to understand what's making it hard to keep up with your heart medications generally — it looks like a few of them haven't been filled in a while. Sometimes it helps to talk through whether it's remembering, cost, or something else."
+    },
+    {
+      "rank": 4,
+      "alert_title": "Missed Post-Discharge Cardiology Follow-Up — 241 Days Ago",
+      "connected_position_ids": ["note-section-1"],
+      "reason": "The discharge plan from March 12, 2024 required a cardiology follow-up within 7 days. No subsequent note confirms this occurred. The follow-up was meant to monitor Carvedilol titration and confirm cardiac stability — both of which are now unknown 241 days later.",
+      "suggested_opening": "After you left the hospital in March, there was a heart specialist appointment set up for March 19th. Were you able to make that one, or did something get in the way?"
+    },
+    {
+      "rank": 5,
+      "alert_title": "Pulmonary Rehab Approved But Never Started — 102 Days",
+      "connected_position_ids": ["auth-section-2", "gap-section-4", "lab-section-9"],
+      "reason": "Pulmonary rehab was authorized June 17, 2024 but enrollment still has not been confirmed 102 days later. With resting SpO2 at 91% and spirometry overdue by 568 days, James's lung function is deteriorating without any structured intervention.",
+      "suggested_opening": "We got approval for a breathing rehab program for you back in June — it's designed to help with your COPD and build up your stamina. We haven't heard that you've started it yet. Is that something you'd still like to do, or has something made it hard to get started?"
+    }
+  ]
+}

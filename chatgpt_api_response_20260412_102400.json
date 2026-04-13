@@ -1,0 +1,6 @@
+{
+  "status_code": 502,
+  "response": {
+    "detail": "ChatGPT did not return valid JSON after retry."
+  }
+}

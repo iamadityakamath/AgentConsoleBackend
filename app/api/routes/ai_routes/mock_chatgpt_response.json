@@ -1,0 +1,194 @@
+{
+  "clinical_story": "James Thornton, a 74-year-old male with heart failure, hypertension, and COPD, has critical lab results from January 31, 2024, showing a BNP level of 2331.1 pg/mL, indicating severe heart failure exacerbation. He has not had a BMP lab drawn since his diuretic adjustment on October 14, 2024, which is now 32 days overdue, posing a significant risk for electrolyte imbalances. Additionally, he has multiple medication adherence issues, particularly with Furosemide and Lisinopril, which he has skipped several doses of due to forgetfulness. The most urgent concern is the critical high BNP level, which requires immediate follow-up and intervention.",
+  "timeline_events": [
+    {
+      "date": "2024-01-31",
+      "event_type": "lab_draw",
+      "title": "BNP Lab Drawn",
+      "description": "A BNP test was drawn with a critical high result of 2331.1 pg/mL, indicating severe heart failure exacerbation.",
+      "source_position_id": "lab-section-1",
+      "related_position_ids": [],
+      "clinical_significance": "critical"
+    },
+    {
+      "date": "2024-03-12",
+      "event_type": "hospital_visit",
+      "title": "Hospital Admission",
+      "description": "James was admitted for acute decompensated heart failure with COPD exacerbation after worsening symptoms and medication non-adherence.",
+      "source_position_id": "note-section-1",
+      "related_position_ids": [
+        "lab-section-1"
+      ],
+      "clinical_significance": "critical"
+    },
+    {
+      "date": "2024-03-19",
+      "event_type": "care_gap",
+      "title": "Follow-up Overdue",
+      "description": "A follow-up appointment was recommended within 7 days post-discharge but has not been completed.",
+      "source_position_id": "note-section-1",
+      "related_position_ids": [],
+      "clinical_significance": "high"
+    }
+  ],
+  "coordinator_questions": [
+    {
+      "question_id": "Q1",
+      "source_position_id": "lab-section-1",
+      "source_type": "lab",
+      "source_label": "BNP Result",
+      "category": "lab_followup",
+      "priority": "critical",
+      "question_text": "James, we noticed your BNP level was critically high at 2331.1 pg/mL. Have you been experiencing any new or worsening symptoms since then?",
+      "clinical_context": "This question is crucial to assess the patient's current heart failure status and need for urgent intervention."
+    },
+    {
+      "question_id": "Q2",
+      "source_position_id": "med-section-2",
+      "source_type": "medication",
+      "source_label": "Lisinopril",
+      "category": "medication_adherence",
+      "priority": "high",
+      "question_text": "I see that you've been skipping doses of Lisinopril 3-4 times a week. What can we do to help you remember to take it regularly?",
+      "clinical_context": "Adherence to Lisinopril is essential for managing hypertension and preventing heart failure exacerbations."
+    },
+    {
+      "question_id": "Q3",
+      "source_position_id": "med-section-4",
+      "source_type": "medication",
+      "source_label": "Furosemide",
+      "category": "medication_adherence",
+      "priority": "high",
+      "question_text": "James, it's important to take your Furosemide daily as prescribed. Can we discuss any challenges you're facing with this medication?",
+      "clinical_context": "Non-adherence to Furosemide can lead to fluid retention and worsening heart failure."
+    },
+    {
+      "question_id": "Q4",
+      "source_position_id": "note-section-1",
+      "source_type": "ehr_note",
+      "source_label": "Follow-up Overdue",
+      "category": "general",
+      "priority": "medium",
+      "question_text": "I noticed your follow-up appointment after your hospital discharge on March 12 is overdue. Can we schedule that now?",
+      "clinical_context": "Timely follow-up is critical to monitor James's heart failure management and adjust treatment as necessary."
+    },
+    {
+      "question_id": "Q5",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "General Check-in",
+      "category": "general",
+      "priority": "low",
+      "question_text": "How have you been feeling overall since we last spoke?",
+      "clinical_context": "Regular check-ins help assess the patient's overall health and address any emerging concerns."
+    },
+    {
+      "question_id": "Q6",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "Living Situation",
+      "category": "general",
+      "priority": "low",
+      "question_text": "Has anything changed at home - with your living situation or your ability to get to appointments?",
+      "clinical_context": "Understanding the patient's living situation can help identify potential barriers to care."
+    },
+    {
+      "question_id": "Q7",
+      "source_position_id": "general",
+      "source_type": "general",
+      "source_label": "Concerns",
+      "category": "general",
+      "priority": "low",
+      "question_text": "Is there anything you have been worried about that you would like to talk through today?",
+      "clinical_context": "Encouraging patients to express concerns can lead to better engagement and care management."
+    }
+  ],
+  "missed_follow_ups": [
+    {
+      "source_position_id": "note-section-1",
+      "note_date": "2024-03-12",
+      "follow_up_date_recommended": "2024-03-19",
+      "follow_up_found": false,
+      "days_overdue": 241,
+      "clinical_risk": "Missing this follow-up increases the risk of worsening heart failure and potential hospitalization due to unmanaged symptoms."
+    }
+  ],
+  "medication_risk_connections": [
+    {
+      "source_position_id": "med-section-2",
+      "drug_name": "Lisinopril",
+      "adherence_status": "Non-Adherent",
+      "days_since_last_fill": 94,
+      "connected_lab_position_ids": [],
+      "connected_gap_position_ids": [
+        "gap-section-1"
+      ],
+      "connected_note_position_ids": [
+        "note-section-1"
+      ],
+      "risk_summary": "Non-adherence to Lisinopril may contribute to uncontrolled hypertension, which can exacerbate heart failure symptoms and lead to critical lab results."
+    },
+    {
+      "source_position_id": "med-section-4",
+      "drug_name": "Furosemide",
+      "adherence_status": "Non-Adherent",
+      "days_since_last_fill": 85,
+      "connected_lab_position_ids": [],
+      "connected_gap_position_ids": [
+        "gap-section-1"
+      ],
+      "connected_note_position_ids": [
+        "note-section-1"
+      ],
+      "risk_summary": "Skipping doses of Furosemide can lead to fluid retention and worsening heart failure, as evidenced by the recent hospitalization."
+    }
+  ],
+  "coordinator_alerts": [
+    {
+      "rank": 1,
+      "alert_title": "Critical BNP Level",
+      "connected_position_ids": [
+        "lab-section-1"
+      ],
+      "reason": "James's BNP level is critically high at 2331.1 pg/mL, indicating severe heart failure exacerbation that requires immediate clinical follow-up.",
+      "suggested_opening": "James, we need to talk about your recent lab results, especially your BNP level."
+    },
+    {
+      "rank": 2,
+      "alert_title": "Medication Non-Adherence",
+      "connected_position_ids": [
+        "med-section-2",
+        "med-section-4"
+      ],
+      "reason": "James has reported skipping doses of Lisinopril and Furosemide multiple times a week, which can lead to worsening heart failure and hypertension.",
+      "suggested_opening": "Can we discuss your medications, especially Lisinopril and Furosemide, and how we can help you take them regularly?"
+    },
+    {
+      "rank": 3,
+      "alert_title": "Missed Follow-up Appointment",
+      "connected_position_ids": [
+        "note-section-1"
+      ],
+      "reason": "James has missed his follow-up appointment scheduled for March 19, which is critical for monitoring his heart failure management.",
+      "suggested_opening": "I noticed your follow-up appointment is overdue. Can we schedule that now?"
+    },
+    {
+      "rank": 4,
+      "alert_title": "Lab Monitoring Gap",
+      "connected_position_ids": [
+        "gap-section-1"
+      ],
+      "reason": "A BMP lab is overdue by 32 days, which is critical for monitoring renal function and electrolytes after diuretic adjustment.",
+      "suggested_opening": "We need to address the overdue BMP lab to ensure your renal function is being monitored properly."
+    },
+    {
+      "rank": 5,
+      "alert_title": "Influenza Vaccine Gap",
+      "connected_position_ids": [
+        "gap-section-3"
+      ],
+      "reason": "James has not received his influenza vaccine for the current season, which is important for his COPD management.",
+      "suggested_opening": "Have you had a chance to get your flu shot this season? It's important for your health."
+    }
+  ]
+}

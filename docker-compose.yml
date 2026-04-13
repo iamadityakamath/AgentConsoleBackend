@@ -1,0 +1,61 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: vedara-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - ENVIRONMENT=development
+      - LOG_LEVEL=INFO
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+    env_file:
+      - .env.dev
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - vedara-network
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: vedara-db
+    environment:
+      POSTGRES_USER: vedara_user
+      POSTGRES_PASSWORD: vedara_password
+      POSTGRES_DB: vedara_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - vedara-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vedara_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: vedara-cache
+    ports:
+      - "6379:6379"
+    networks:
+      - vedara-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  vedara-network:
+    driver: bridge
