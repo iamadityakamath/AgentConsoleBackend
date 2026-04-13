@@ -24,12 +24,13 @@ def _include_router(module_path: str, required: bool = False) -> None:
         logger.exception("Skipping router due to import failure: %s", module_path)
 
 
-# Health and AI routes are required.
+# Health route is required.
 _include_router("app.api.routes.health", required=True)
-_include_router("app.api.routes.ai_routes.undertand_patient_data", required=True)
-_include_router("app.api.routes.ai_routes.frame_questions", required=True)
 
-# Data/reporting routes are optional in serverless environments.
+# All non-health routes are optional in serverless startup.
+_include_router("app.api.routes.ai_routes.undertand_patient_data")
+_include_router("app.api.routes.ai_routes.frame_questions")
+
 _include_router("app.api.routes.care_gaps")
 _include_router("app.api.routes.ehr_notes")
 _include_router("app.api.routes.insurance_claims")
