@@ -4,7 +4,6 @@ Data loader for reading Excel files from Data folder.
 This module loads all Excel files from the Data folder and provides
 cached access to the data.
 """
-import pandas as pd
 from pathlib import Path
 from typing import List, Dict, Any
 from functools import lru_cache
@@ -17,10 +16,17 @@ DATA_FOLDER = PROJECT_ROOT / "Data"
 
 def _normalize_value(value: Any) -> Any:
     """Convert pandas/numpy values into JSON-safe Python types."""
-    if pd.isna(value):
-        return None
-    if isinstance(value, pd.Timestamp):
-        return value.isoformat()
+    try:
+        import pandas as pd  # Lazy import for serverless startup safety
+
+        if pd.isna(value):
+            return None
+        if isinstance(value, pd.Timestamp):
+            return value.isoformat()
+    except Exception:
+        if value is None:
+            return None
+
     if hasattr(value, "item"):
         try:
             return value.item()
@@ -31,6 +37,8 @@ def _normalize_value(value: Any) -> Any:
 
 def _read_excel_records(file_path: Path) -> List[Dict[str, Any]]:
     """Read one Excel file and return normalized records."""
+    import pandas as pd  # Lazy import for serverless startup safety
+
     df = pd.read_excel(file_path)
     records = df.to_dict(orient="records")
     return [
@@ -191,15 +199,15 @@ def load_prior_auths() -> List[Dict[str, Any]]:
         return []
 
 
-# Load all data at module initialization
-CARE_GAPS_DATA = load_care_gaps()
-EHR_NOTES_DATA = load_ehr_notes()
-INSURANCE_CLAIMS_DATA = load_insurance_claims()
-LAB_RESULTS_DATA = load_lab_results()
-MEDICATIONS_DATA = load_medications()
-PATIENTS_DATA = load_patients()
-PHARMACY_CLAIMS_DATA = load_pharmacy_claims()
-PRIOR_AUTHS_DATA = load_prior_auths()
+# Avoid import-time data loading in serverless environments.
+CARE_GAPS_DATA: List[Dict[str, Any]] = []
+EHR_NOTES_DATA: List[Dict[str, Any]] = []
+INSURANCE_CLAIMS_DATA: List[Dict[str, Any]] = []
+LAB_RESULTS_DATA: List[Dict[str, Any]] = []
+MEDICATIONS_DATA: List[Dict[str, Any]] = []
+PATIENTS_DATA: List[Dict[str, Any]] = []
+PHARMACY_CLAIMS_DATA: List[Dict[str, Any]] = []
+PRIOR_AUTHS_DATA: List[Dict[str, Any]] = []
 
 
 def get_record_by_id(data: List[Dict[str, Any]], id_field: str, id_value: str) -> Dict[str, Any] | None:

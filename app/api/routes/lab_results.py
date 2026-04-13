@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import LAB_RESULTS_DATA, get_records_by_id
+from app.core.data_loader import load_lab_results, get_records_by_id
 
 router = APIRouter(prefix="/lab-results", tags=["Lab Results"])
 
@@ -35,7 +35,7 @@ async def get_lab_results() -> List[LabResult]:
     Returns:
         List[LabResult]: List of lab results
     """
-    return LAB_RESULTS_DATA
+    return load_lab_results()
 
 
 @router.get("/{member_id}", response_model=List[LabResult], status_code=status.HTTP_200_OK)
@@ -49,7 +49,7 @@ async def get_lab_result(member_id: str) -> List[LabResult]:
     Returns:
         List[LabResult]: Lab result details
     """
-    records = get_records_by_id(LAB_RESULTS_DATA, "member_id", member_id)
+    records = get_records_by_id(load_lab_results(), "member_id", member_id)
     if not records:
         raise HTTPException(status_code=404, detail="Lab result not found for this member")
     return records

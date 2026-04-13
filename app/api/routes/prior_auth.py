@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import PRIOR_AUTHS_DATA, get_records_by_id
+from app.core.data_loader import load_prior_auths, get_records_by_id
 
 router = APIRouter(prefix="/prior-auth", tags=["Prior Authorization"])
 
@@ -35,7 +35,7 @@ async def get_prior_auths() -> List[PriorAuth]:
     Returns:
         List[PriorAuth]: List of prior authorizations
     """
-    return PRIOR_AUTHS_DATA
+    return load_prior_auths()
 
 
 @router.get("/{member_id}", response_model=List[PriorAuth], status_code=status.HTTP_200_OK)
@@ -49,7 +49,7 @@ async def get_prior_auth(member_id: str) -> List[PriorAuth]:
     Returns:
         List[PriorAuth]: Prior authorization details
     """
-    records = get_records_by_id(PRIOR_AUTHS_DATA, "member_id", member_id)
+    records = get_records_by_id(load_prior_auths(), "member_id", member_id)
     if not records:
         raise HTTPException(status_code=404, detail="Prior authorization not found for this member")
     return records

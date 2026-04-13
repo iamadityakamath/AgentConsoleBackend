@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import CARE_GAPS_DATA, get_records_by_id
+from app.core.data_loader import load_care_gaps, get_records_by_id
 
 router = APIRouter(prefix="/care-gaps", tags=["Care Gaps"])
 
@@ -34,7 +34,7 @@ async def get_care_gaps() -> List[CareGapReport]:
     Returns:
         List[CareGapReport]: List of care gap reports
     """
-    return CARE_GAPS_DATA
+    return load_care_gaps()
 
 
 @router.get("/{member_id}", response_model=List[CareGapReport], status_code=status.HTTP_200_OK)
@@ -48,7 +48,7 @@ async def get_care_gap(member_id: str) -> List[CareGapReport]:
     Returns:
         List[CareGapReport]: Care gap report details
     """
-    records = get_records_by_id(CARE_GAPS_DATA, "member_id", member_id)
+    records = get_records_by_id(load_care_gaps(), "member_id", member_id)
     if not records:
         raise HTTPException(status_code=404, detail="Care gap not found for this member")
     return records
