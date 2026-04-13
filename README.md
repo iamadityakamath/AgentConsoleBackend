@@ -1,146 +1,150 @@
 # Vedara Agent Console Backend API
 
-A production-ready FastAPI application for the Vedara Agent Console.
-
-## Project Structure
-
-```
-├── app/                   # Application package
-│   ├── api/              # API routes
-│   │   └── routes/       # Endpoint definitions
-│   ├── core/             # Core application configuration
-│   ├── models/           # Database models
-│   ├── schemas/          # Pydantic schemas
-│   ├── utils/            # Utility functions
-│   ├── middleware/       # Custom middleware
-│   └── main.py           # FastAPI app initialization
-├── tests/                # Test suite
-├── logs/                 # Application logs
-├── .env                  # Environment variables
-├── .env.example          # Example environment variables
-├── requirements.txt      # Python dependencies
-└── main.py              # Application entry point
-```
+FastAPI backend for Vedara Agent Console, including patient-data routes and AI-assisted routes.
 
 ## Prerequisites
 
 - Python 3.9+
-- pip or conda
+- `pip`
 
-## Setup
+## Quick Start
 
-### 1. Create Virtual Environment
+### 1) Create and activate virtual environment
 
 ```bash
-# Using venv
 python -m venv venv
-
-# Activate virtual environment
-# On Windows:
-venv\Scripts\activate
-# On macOS/Linux:
-source venv/bin/activate
 ```
 
-### 2. Install Dependencies
+Windows PowerShell:
+
+```bash
+.\venv\Scripts\Activate.ps1
+```
+
+### 2) Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment
+### 3) Configure environment
 
-Copy `.env.example` to `.env` and update with your configuration:
-
-```bash
-cp .env.example .env
-```
-
-Update `.env` with your specific configuration:
+Create `.env` at project root and set at least:
 
 ```env
 APP_NAME=Vedara Agent Console API
-BASE_URL=http://localhost:8000
+APP_VERSION=1.0.0
 DEBUG=True
 ENVIRONMENT=development
+BASE_URL=http://localhost:8000
+HOST=0.0.0.0
+PORT=8000
+
+LOG_LEVEL=INFO
+LOG_FILE=logs/app.log
+
+OPENAI_API_KEY=your_openai_key
+GROQ_API_KEY=
+API_KEY=
+
+ALLOWED_ORIGINS=["*"]
+ALLOWED_CREDENTIALS=false
+ALLOWED_METHODS=["*"]
+ALLOWED_HEADERS=["*"]
 ```
 
-### 4. Run Application
+Notes:
+
+- `.env` is gitignored. Do not commit secrets.
+- `undertand_patient_data` currently calls OpenAI live.
+
+### 4) Run locally
 
 ```bash
-# Development server with auto-reload
 python main.py
-
-# Or using uvicorn directly
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-The API will be available at `http://localhost:8000`
+API base URL:
 
-## API Documentation
+```text
+http://localhost:8000
+```
 
-Once the application is running:
-- Interactive API docs (Swagger UI): `http://localhost:8000/docs`
-- Alternative API docs (ReDoc): `http://localhost:8000/redoc`
+## API Docs
 
-## Development
+- Swagger UI: `http://localhost:8000/docs`
+- ReDoc: `http://localhost:8000/redoc`
 
-### Run Tests
+## Core Routes
+
+- `GET /api/v1/health`
+- `POST /api/v1/ai/undertand_patient_data`
+- `POST /api/v1/ai/frame-questions`
+
+## Data Inventory
+
+The `Data` folder currently contains 8 Excel tables:
+
+- `care_gap_reports_mock.xlsx` (110 rows, 15 columns)
+- `ehr_clinical_notes_mock.xlsx` (31 rows, 17 columns)
+- `insurance_claims_mock.xlsx` (71 rows, 17 columns)
+- `lab_results_mock.xlsx` (293 rows, 16 columns)
+- `medication_list_mock.xlsx` (108 rows, 18 columns)
+- `patient_demographics_mock.xlsx` (30 rows, 23 columns)
+- `pharmacy_claims_mock.xlsx` (144 rows, 21 columns)
+- `prior_auth_mock.xlsx` (55 rows, 16 columns)
+
+Generated references with per-table columns and sample values:
+
+- `Data/data_dictionary.md`
+- `Data/data_dictionary.json`
+
+### Column Names By Table
+
+- `care_gap_reports_mock.xlsx`: gap_id, member_id, patient_name, gender, age, gap_category, gap_description, clinical_guideline, last_completed_date, days_overdue, priority, recommended_action, gap_status, assigned_to, gap_notes
+- `ehr_clinical_notes_mock.xlsx`: note_id, member_id, patient_name, gender, age, location, note_date, note_type, provider_name, facility_name, icd_code, primary_diagnosis, subjective, objective, assessment, plan, follow_up_date
+- `insurance_claims_mock.xlsx`: claim_id, member_id, patient_name, gender, age, location, date_of_service, claim_type, place_of_service, provider_name, facility_name, icd_code, diagnosis_description, cpt_code, procedure_description, billed_amount, claim_status
+- `lab_results_mock.xlsx`: lab_id, member_id, patient_name, gender, age, draw_date, lab_type, test_name, result_value, unit, reference_range, result_flag, ordering_provider, lab_facility, status, clinical_note
+- `medication_list_mock.xlsx`: med_id, member_id, patient_name, gender, age, drug_name, brand_name, dosage, route, frequency, indication, prescribing_provider, date_prescribed, last_fill_date, days_since_last_fill, adherence_status, medication_status, rx_notes
+- `patient_demographics_mock.xlsx`: member_id, full_name, gender, age, date_of_birth, street_address, city, state, zip_code, location, phone_primary, phone_secondary, email_address, preferred_contact_method, preferred_language, marital_status, employment_status, caregiver_support, primary_conditions, insurance_plan_type, insurance_start_date, risk_tier, assigned_coordinator
+- `pharmacy_claims_mock.xlsx`: rx_claim_id, member_id, patient_name, gender, age, date_filled, drug_name, brand_name, dosage, frequency, days_supply, quantity_dispensed, ndc_code, condition_treated, refill_number, refills_remaining, prescribing_provider, pharmacy_name, copay_amount, plan_paid_amount, fill_status
+- `prior_auth_mock.xlsx`: auth_id, member_id, patient_name, gender, age, request_date, auth_type, service_requested, requesting_provider, decision, decision_date, valid_from, valid_through, denial_reason, appeal_status, auth_notes
+
+## ngrok (Public URL for Local API)
+
+Run app in one terminal:
 
 ```bash
-pytest
+python main.py
 ```
 
-### Code Quality Checks
+Expose port `8000` in another terminal:
 
 ```bash
-# Format code
-black app/ tests/
-
-# Lint
-flake8 app/ tests/
-
-# Type checking
-mypy app/
+ngrok http 8000
 ```
 
-## Project Features
-
-- ✅ Production-ready folder structure
-- ✅ Environment configuration management
-- ✅ Middleware support
-- ✅ Pydantic schemas for data validation
-- ✅ SQLAlchemy ORM setup (optional)
-- ✅ Logging configuration
-- ✅ CORS support
-- ✅ Health check endpoint
-- ✅ Testing setup with pytest
-- ✅ Code quality tools (black, flake8, mypy)
-
-## Environment Variables
-
-See `.env.example` for all available configuration options:
-
-- `BASE_URL`: Base URL for the API
-- `HOST`: Server host
-- `PORT`: Server port
-- `DEBUG`: Debug mode flag
-- `ENVIRONMENT`: Environment (development/staging/production)
-- `SECRET_KEY`: Secret key for security
-- `LOG_LEVEL`: Logging level
-- `LOG_FILE`: Log file path
-
-## Contributing
-
-Follow the project structure and use code quality tools before committing:
+If first time using ngrok:
 
 ```bash
-black app/ tests/
-flake8 app/ tests/
-mypy app/
-pytest
+ngrok config add-authtoken YOUR_NGROK_TOKEN
 ```
 
-## License
+Test health via public URL:
 
-MIT
+```text
+https://<your-ngrok-domain>/api/v1/health
+```
+
+## CORS Behavior
+
+- Origins: all allowed by default (`*`).
+- Methods: all allowed.
+- Headers: all allowed.
+- Credentials: only enabled when explicitly set and non-wildcard origins are used.
+
+## Tests
+
+```bash
+pytest -q
+```
