@@ -10,14 +10,13 @@ def setup_logging():
     """
     settings = get_settings()
     
-    # Create logs directory if it doesn't exist
-    log_dir = os.path.dirname(settings.LOG_FILE)
-    if log_dir and not os.path.exists(log_dir):
-        os.makedirs(log_dir, exist_ok=True)
-    
     # Get root logger
     logger = logging.getLogger()
-    logger.setLevel(getattr(logging, settings.LOG_LEVEL))
+    logger.setLevel(getattr(logging, settings.LOG_LEVEL, logging.INFO))
+
+    # Avoid stacking duplicate handlers when app module is imported multiple times.
+    if logger.handlers:
+        return logger
     
     # Create formatters
     formatter = logging.Formatter(
@@ -27,19 +26,26 @@ def setup_logging():
     
     # Console handler
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(getattr(logging, settings.LOG_LEVEL))
+    console_handler.setLevel(getattr(logging, settings.LOG_LEVEL, logging.INFO))
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
-    
-    # File handler with rotation
-    file_handler = logging.handlers.RotatingFileHandler(
-        settings.LOG_FILE,
-        maxBytes=10485760,  # 10MB
-        backupCount=10
-    )
-    file_handler.setLevel(getattr(logging, settings.LOG_LEVEL))
-    file_handler.setFormatter(formatter)
-    logger.addHandler(file_handler)
+
+    # File logging can fail on serverless/read-only file systems (e.g., Vercel).
+    try:
+        log_dir = os.path.dirname(settings.LOG_FILE)
+        if log_dir and not os.path.exists(log_dir):
+            os.makedirs(log_dir, exist_ok=True)
+
+        file_handler = logging.handlers.RotatingFileHandler(
+            settings.LOG_FILE,
+            maxBytes=10485760,  # 10MB
+            backupCount=10,
+        )
+        file_handler.setLevel(getattr(logging, settings.LOG_LEVEL, logging.INFO))
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+    except Exception:
+        logger.warning("File logging disabled: unable to create/write log file", exc_info=True)
     
     return logger
 
