@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import load_pharmacy_claims, get_record_by_id
+from app.core.data_loader import PHARMACY_CLAIMS_DATA, get_record_by_id
 
 router = APIRouter(prefix="/pharmacy-claims", tags=["Pharmacy Claims"])
 
@@ -40,7 +40,7 @@ async def get_pharmacy_claims() -> List[PharmacyClaim]:
     Returns:
         List[PharmacyClaim]: List of pharmacy claims
     """
-    return load_pharmacy_claims()
+    return PHARMACY_CLAIMS_DATA
 
 
 @router.get("/{rx_claim_id}", response_model=PharmacyClaim, status_code=status.HTTP_200_OK)
@@ -54,7 +54,7 @@ async def get_pharmacy_claim(rx_claim_id: str) -> PharmacyClaim:
     Returns:
         PharmacyClaim: Pharmacy claim details
     """
-    record = get_record_by_id(load_pharmacy_claims(), "rx_claim_id", rx_claim_id)
+    record = get_record_by_id(PHARMACY_CLAIMS_DATA, "rx_claim_id", rx_claim_id)
     if not record:
         raise HTTPException(status_code=404, detail="Pharmacy claim not found")
     return record

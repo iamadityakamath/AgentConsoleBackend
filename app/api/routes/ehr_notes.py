@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import load_ehr_notes, get_records_by_id
+from app.core.data_loader import EHR_NOTES_DATA, get_records_by_id
 
 router = APIRouter(prefix="/ehr-notes", tags=["EHR Clinical Notes"])
 
@@ -36,7 +36,7 @@ async def get_ehr_notes() -> List[EHRClinicalNote]:
     Returns:
         List[EHRClinicalNote]: List of clinical notes
     """
-    return load_ehr_notes()
+    return EHR_NOTES_DATA
 
 
 @router.get("/{member_id}", response_model=List[EHRClinicalNote], status_code=status.HTTP_200_OK)
@@ -50,7 +50,7 @@ async def get_ehr_note(member_id: str) -> List[EHRClinicalNote]:
     Returns:
         List[EHRClinicalNote]: Clinical note details
     """
-    records = get_records_by_id(load_ehr_notes(), "member_id", member_id)
+    records = get_records_by_id(EHR_NOTES_DATA, "member_id", member_id)
     if not records:
         raise HTTPException(status_code=404, detail="Clinical note not found for this member")
     return records

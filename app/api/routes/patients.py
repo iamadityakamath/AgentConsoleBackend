@@ -2,7 +2,7 @@
 from fastapi import APIRouter, status, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from app.core.data_loader import load_patients, get_record_by_id
+from app.core.data_loader import PATIENTS_DATA, get_record_by_id
 
 router = APIRouter(prefix="/patients", tags=["Patient Demographics"])
 
@@ -42,7 +42,7 @@ async def get_patients() -> List[PatientDemographics]:
     Returns:
         List[PatientDemographics]: List of patient demographics
     """
-    return load_patients()
+    return PATIENTS_DATA
 
 
 @router.get("/{member_id}", response_model=PatientDemographics, status_code=status.HTTP_200_OK)
@@ -56,7 +56,7 @@ async def get_patient(member_id: str) -> PatientDemographics:
     Returns:
         PatientDemographics: Patient demographics details
     """
-    record = get_record_by_id(load_patients(), "member_id", member_id)
+    record = get_record_by_id(PATIENTS_DATA, "member_id", member_id)
     if not record:
         raise HTTPException(status_code=404, detail="Patient not found")
     return record
